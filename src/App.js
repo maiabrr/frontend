@@ -1,12 +1,21 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductForm from './components/ProductForm';
+import ProductList from './components/ProductList';
+import ProductDetails from './components/ProductDetails'; // Importamos el componente ProductDetails
 
 function App() {
   return (
-    <div>
-      <h1>Product Admin Panel</h1>
-      <ProductForm />
-    </div>
+    <Router>
+      <div>
+        <h1>Product Admin Panel</h1>
+        <Routes>
+          <Route path="/" exact component={ProductList} /> {/* Ruta para la página principal */}
+          <Route path="/products/add" component={ProductForm} /> {/* Ruta para el formulario de producto */}
+          <Route path="/products/:id" component={ProductDetails} /> {/* Ruta para la página de detalles del producto */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
