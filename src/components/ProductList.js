@@ -19,19 +19,29 @@ const ProductList = () => {
         fetchProducts();
     }, []);
 
+    const handleDelete = async (id) => {
+        try {
+        await axios.delete(`http://localhost:5000/api/products/${id}`);
+        setProducts(products.filter(product => product._id !== id)); // Actualizar el estado eliminando el producto
+        } catch (error) {
+        console.error(error);
+        }
+    };
+
     return (
         <div>
         <h2>Product List</h2>
         <ul>
             {products.map(product => (
-            <li key={product._id}>
+                <li key={product._id}>
                 <h3>{product.title}</h3>
                 <p>{product.price}</p>
                 <p>{product.description}</p>
-                <Link to={`/products/${product._id}`}>View Details</Link> {/* Enlace a la página de detalles */}
-            </li>
+                <Link to={`/products/${product._id}`}>View Details</Link>
+                <button onClick={() => handleDelete(product._id)}>Delete</button>
+                </li>
             ))}
-        </ul>
+            </ul>
         </div>
     );
     };
